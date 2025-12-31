@@ -1,6 +1,6 @@
 package com.projectaizen.players;
 
-import com.projectaizen.util.Input;
+import com.projectaizen.util.Utility;
 
 /**
  *
@@ -11,8 +11,8 @@ public class HumanPlayer extends Player {
     @Override
     public byte getPlayerMove(){
         byte move = -1;
-        System.out.print(getPlayerName()+", Enter Your move: ");
-        move = Input.sc.nextByte();
+        System.out.print("\n"+getPlayerName()+", Enter Your move: ");
+        move = Utility.sc.nextByte();
         return move;
     }
     

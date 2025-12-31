@@ -65,20 +65,68 @@ public class Over {
         return wicketsTaken;
     }
 
-    public void displayOverStats() {
-        System.out.println("-------------------------------------------------------");
-        System.out.println("| Ball\t|\tBatsman\t|\tBowler\t|\tRemark  |");
-        System.out.println("-------------------------------------------------------");
-        for (int i = 0; i < 6; i++) {
-            System.out.print("| " + (i + 1));
-            System.out.print("\t|\t" + over[i].getBatterMove() + "\t|\t" + over[i].getBowlerMove() + "\t|\t");
-            if (over[i].isIsOut() == true) {
-                System.out.println("OUT\t|");
-            } else {
-                System.out.println("\t|");
-            }
-            System.out.println("-------------------------------------------------------");
+    private String center(String text, int width) {
+        if (text == null) {
+            text = "";
         }
+        if (text.length() >= width) {
+            return text.substring(0, width);
+        }
+
+        int leftPadding = (width - text.length()) / 2;
+        int rightPadding = width - text.length() - leftPadding;
+
+        return " ".repeat(leftPadding) + text + " ".repeat(rightPadding);
+    }
+
+    public void displayOverStats() {
+
+        final int BALL_W = 4;
+        final int BAT_W = 7;
+        final int BOWL_W = 7;
+        final int REMARK_W = 12;
+
+        String border = "+------+---------+---------+--------------+";
+
+        System.out.println(border);
+        System.out.println(
+                "| " + center("Ball", BALL_W)
+                + " | " + center("Batsman", BAT_W)
+                + " | " + center("Bowler", BOWL_W)
+                + " | " + center("Remark", REMARK_W) + " |"
+        );
+        System.out.println(border);
+
+        for (int i = 0; i < 6; i++) {
+
+            String batsman = "";
+            String bowler = "";
+            String remark;
+
+            if (over[i].getBatterMove() != -1) {
+                batsman = String.valueOf(over[i].getBatterMove());
+                bowler = String.valueOf(over[i].getBowlerMove());
+
+                if (over[i].isIsOut()) {
+                    remark = "OUT";
+                } else if (over[i].getBatterMove() == 0) {
+                    remark = "Dot Ball";
+                } else {
+                    remark = "Earned " + over[i].getBatterMove();
+                }
+            } else {
+                remark = "Pending";
+            }
+
+            System.out.println(
+                    "| " + center(String.valueOf(i + 1), BALL_W)
+                    + " | " + center(batsman, BAT_W)
+                    + " | " + center(bowler, BOWL_W)
+                    + " | " + center(remark, REMARK_W) + " |"
+            );
+        }
+
+        System.out.println(border);
     }
 
     public Over() {

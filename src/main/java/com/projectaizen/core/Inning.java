@@ -11,7 +11,7 @@ import com.projectaizen.players.Player;
  *      2.  currentBall(Ball)
  *      3.  currentOver(Over)
  *      4.  score(int)
- *      5.  isDead(Boolean)
+ *      5.  isInningOver(Boolean)
  *      6.  batsman(Player)
  *      7.  bowler(Player)
  *      8.  currentOverNumber
@@ -26,23 +26,24 @@ import com.projectaizen.players.Player;
  * 
  * @author Aryan
  */
-public class Innings {
+public class Inning {
 
     private ArrayList<Over> overs = new ArrayList<>();  //  stores all the overs of this inning
     private Ball currentBall;                           //  stores the state of batterMove, BowlerMover etc. to be added to the current over
     private Over currentOver;                           //  store the state of current over being played. after over is full, to be added to the ArrayList
     private int score;                                  //  stores the total score of this inning
-    private boolean isDead;                             //  true if the player(s) is dead
+    private boolean isInningOver;                       //  true if the player(s) is dead or target is reached
     private Player batsman;                             //  the batsman for this inning
     private Player bowler;                              //  the bowler for this inning
     private byte currentOverNumber;                     //  the ongoing over's number
+    private int target;                                 //  initial innig = -1 and >0 if target given
 
     public int getScore() {
         return score;
     }
 
-    public boolean isIsDead() {
-        return isDead;
+    public boolean isIsInningOver() {
+        return isInningOver;
     }
     
     public void start() {
@@ -58,15 +59,34 @@ public class Innings {
 
             generateBall(batterMove, bowlerMove);
             
-            System.out.println("Score: "+this.score);
+            
+            
+            
+            System.out.println("\n=================");
+            System.out.println(batsman.getPlayerName()+"'s Score: "+this.score);
+            
+            //  if 2nd inning, then also print target
+            if(target != -1){
+                System.out.println(batsman.getPlayerName()+"'s Target: "+this.target);
+            }
+            
             System.out.println("Current Over: "+currentOverNumber);
             System.out.println("Current Ball: "+currentOver.getCurrentBall());
+            System.out.println("---------------");
             System.out.println(batsman.getPlayerName()+"'s Move: "+batterMove);
             System.out.println(bowler.getPlayerName()+"'s Move: "+bowlerMove);
+            System.out.println("=================\n");
             
-        }while(isDead != true);
+            //  check for target acheived if it is 2nd inning
+            if(this.target != -1 && this.score >= this.target){
+                isInningOver = true;
+                break;
+            }
+            
+        }while(isInningOver != true);
         
-        System.out.println("Innings over!\n Score: "+this.score);
+        
+        System.out.println("Innings over!\n"+batsman.getPlayerName()+"'s Score: "+this.score);
         overs.add(currentOver);
         currentOver.displayOverStats();
     }
@@ -85,19 +105,30 @@ public class Innings {
         
         //  Check if the Batsman is Dead or not
         if(currentBall.getBatterMove() == currentBall.getBowlerMove()){
-            this.isDead = true;
+            this.isInningOver = true;
         }else{
             this.score += currentBall.getBatterMove();  //  Update innings Score
         }
     }
 
-    public Innings(Player batsman, Player bowler) {
+    public Inning(Player batsman, Player bowler) {
         this.batsman = batsman;
         this.bowler = bowler;
         this.currentOver = new Over();
-        this.isDead = false;
+        this.isInningOver = false;
         this.score = 0;
         this.currentOverNumber = 1;
+        this.target = -1;       //states that this is the first innings.
+    }
+    
+    public Inning(Player batsman, Player bowler, int target) {
+        this.batsman = batsman;
+        this.bowler = bowler;
+        this.currentOver = new Over();
+        this.isInningOver = false;
+        this.score = 0;
+        this.currentOverNumber = 1;
+        this.target = target;   //  states that this is the 2nd innings, and the target is given.
     }
 
 }
