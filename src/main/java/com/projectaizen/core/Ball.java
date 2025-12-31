@@ -8,8 +8,8 @@ package com.projectaizen.core;
  *      3. isOut(Boolean) 
  *      4. runs(Byte) 
  * We can change the values only through
- * constructor and not by setters. We can only get the values of the above
- * mentioned variables through Getters.
+ * constructor and not by setters. We can get the values of the above
+ * mentioned variables through Getters only.
  *
  * The isOut field is set to true if the batterMove and bowlerMove are equal.
  * Initially(Through default constructor) the batterMove, bowlerMove are set to
@@ -55,7 +55,7 @@ public class Ball {
         }
     }
 
-    //  empty ball
+    //  empty ball constructor
     public Ball() {
         this.batterMove = -1;
         this.bowlerMove = -1;

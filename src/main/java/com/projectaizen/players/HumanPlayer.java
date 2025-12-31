@@ -1,13 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.projectaizen.players;
+
+import com.projectaizen.util.Input;
 
 /**
  *
- * @author Asus
+ * @author Aryan
  */
-public class HumanPlayer {
+public class HumanPlayer extends Player {
+
+    @Override
+    public byte getPlayerMove(){
+        byte move = -1;
+        System.out.print(getPlayerName()+", Enter Your move: ");
+        move = Input.sc.nextByte();
+        return move;
+    }
     
+    public HumanPlayer(String playerName) {
+        super(playerName);
+    }
 }
