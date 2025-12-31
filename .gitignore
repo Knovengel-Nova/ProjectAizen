@@ -1,0 +1,52 @@
+# =========================
+# Build output
+# =========================
+target/
+build/
+dist/
+out/
+
+# =========================
+# NetBeans specific
+# =========================
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# =========================
+# Java
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+.idea/
+.vscode/
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+*.properties.local
+
+# =========================
+# Test & coverage reports
+# =========================
+coverage/
+*.exec
